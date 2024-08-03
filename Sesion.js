@@ -64,14 +64,12 @@ class Sesion {
     return this.estado.seleccionarArticulos();
   }
 
+  asignarRevisores() {
+    this.estado.asignarRevisores();
+  }
+
   asignarEvaluacion(revisor, articulo, puntaje, texto) {
-    let revision = articulo.revisiones.find(
-      (revision) => revision.revisor === revisor
-    );
-    if (!revision) {
-      revision = new Revision(revisor, puntaje, texto);
-      articulo.agregarRevision(revision);
-    }
+    this.estado.asignarEvaluacion(revisor, articulo, puntaje, texto);
   }
 
   /*

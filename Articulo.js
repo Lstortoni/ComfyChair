@@ -17,8 +17,8 @@ class Articulo {
   }
 
   agregarRevision(revision) {
-    if (this.revisiones.length < 3) {
-      this.revisiones.push(revision);
+    if (this.revisionesArticulo.length < 3) {
+      this.revisionesArticulo.push(revision);
     } else {
       throw new Error("El artículo ya tiene el máximo de 3 revisiones.");
     }
@@ -26,6 +26,15 @@ class Articulo {
 
   quitarRevision(revision) {
     this.revisiones = this.revisiones.filter((r) => r !== revision);
+  }
+
+  calificacionPromedio() {
+    if (this.revisionesArticulo.length === 0) return 0;
+    const totalPuntaje = this.evisionesArticulo.reduce(
+      (sum, rev) => sum + rev.puntaje,
+      0
+    );
+    return totalPuntaje / this.evisionesArticulo.length;
   }
 }
 module.exports = Articulo;

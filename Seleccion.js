@@ -29,6 +29,15 @@ class Seleccion extends EstadoSesion {
       this.sesion.articulos
     );
   }
+
+  asignarRevisores() {
+    throw new Error("No se pueden asignar revisores en el estado de Selecion");
+  }
+  asignarEvaluacion(revisor, articulo, puntaje, texto) {
+    throw new Error(
+      "No se pueden asignar evaluaciones en el estado de Selección"
+    );
+  }
 }
 
 module.exports = Seleccion;

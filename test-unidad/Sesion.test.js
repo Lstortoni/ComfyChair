@@ -16,6 +16,7 @@ const Mejores = require("../Mejores");
 const CorteFijo = require("../CorteFijo");
 const Bid = require("../Bid");
 const Conferencia = require("../Conferencia");
+const AsignacionYRevision = require("../AsignacionYRevision");
 
 describe("Sesion", () => {
   let conferencia;
@@ -34,6 +35,8 @@ describe("Sesion", () => {
   let revisor4;
   let autor1;
   let autor2;
+  let metodoSeleccionMejores;
+  let metodoSeleccionCorteFijo;
 
   beforeEach(() => {
     conferencia = new Conferencia("Conferencia de Prueba");
@@ -130,7 +133,7 @@ describe("Sesion", () => {
     ]);
 
     articuloRegular1 = new ArticuloRegular(
-      "Articulo Regular",
+      "Articulo Regular 1",
       "url1",
       [autor1],
       autor1,
@@ -138,7 +141,7 @@ describe("Sesion", () => {
     );
 
     articuloRegular2 = new ArticuloRegular(
-      "Articulo Regular",
+      "Articulo Regular 2",
       "url1",
       [autor2],
       autor2,
@@ -146,7 +149,7 @@ describe("Sesion", () => {
     );
 
     articuloRegular3 = new ArticuloRegular(
-      "Articulo Regular",
+      "Articulo Regular 3",
       "url1",
       [autor3],
       autor3,
@@ -154,7 +157,7 @@ describe("Sesion", () => {
     );
 
     articuloRegular4 = new ArticuloRegular(
-      "Articulo Regular",
+      "Articulo Regular 4",
       "url1",
       [autor4],
       autor4,
@@ -162,7 +165,7 @@ describe("Sesion", () => {
     );
 
     articuloRegular5 = new ArticuloRegular(
-      "Articulo Regular",
+      "Articulo Regular 5",
       "url1",
       [autor5],
       autor5,
@@ -182,6 +185,9 @@ describe("Sesion", () => {
     conferencia.agregarAutor(autor3);
     conferencia.agregarAutor(autor4);
     conferencia.agregarAutor(autor5);
+
+    metodoSeleccionMejores = new Mejores(80);
+    metodoSeleccionCorteFijo = new CorteFijo();
   });
   /*********************************************************************************************************************************************************/
 
@@ -325,7 +331,11 @@ describe("Sesion", () => {
 
   /**
    * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
-   * 1 - Prueba cambiando a estado Bidding y agrego un Bid
+   * cerramos etapa de Bidding y asignamos articulos a revisores.
+   * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
+   * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
+   * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
+   * 4 - Verifico que tenga seteada la sesion el estado.
    */
 
   //
@@ -341,16 +351,97 @@ describe("Sesion", () => {
 
     expect(sesionRegular.estado instanceof Bidding).toBe(true);
 
-    const bid1 = new Bid(revisor1, articuloRegular1, InteresRevisor.INTERESADO);
-
     sesionRegular.recibirBid(
       revisor1,
       articuloRegular1,
       InteresRevisor.INTERESADO
     );
 
-    expect(sesionRegular.bids).toHaveLength(1);
-    // expect(sesionRegular.bids[0]).toEqual(bid1);
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular1,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular1,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(revisor4, articuloRegular5, InteresRevisor.QUIZAS);
+
+    expect(sesionRegular.bids).toHaveLength(13);
+
+    sesionRegular.definirMetodoSeleccion(metodoSeleccionMejores);
+    sesionRegular.estado.cerrarBidding();
+
+    //3
+    expect(sesionRegular.estado instanceof AsignacionYRevision).toBe(true);
+
+    //4
+    expect(sesionRegular.estado.sesion instanceof Sesion).toBe(true);
+
+    sesionRegular.asignarRevisores();
+
+    // Verificar que cada artículo tenga 3 revisores asignados
+    sesionRegular.articulos.forEach((articulo) => {
+      expect(articulo.revisoresarticulo).toHaveLength(3);
+    });
   });
 
   /*

@@ -29,6 +29,15 @@ class Bidding extends EstadoSesion {
       "No se pueden seleccionar artículos en el estado de Bidding"
     );
   }
+
+  asignarRevisores() {
+    throw new Error("No se pueden asignar revisores en el estado de Bidding");
+  }
+  asignarEvaluacion(revisor, articulo, puntaje, texto) {
+    throw new Error(
+      "No se pueden asignar evaluaciones en el estado de Bidding"
+    );
+  }
 }
 
 module.exports = Bidding;

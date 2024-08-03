@@ -28,6 +28,13 @@ class EstadoSesion {
       "Los revisores solo pueden ser asignados en el estado de Asignación y Revisión."
     );
   }
+
+  asignarRevisores() {
+    throw new Error("Este método debe ser implementado por subclases");
+  }
+  asignarEvaluacion(revisor, articulo, puntaje, texto) {
+    throw new Error("Este método debe ser implementado por subclases");
+  }
 }
 
 module.exports = EstadoSesion;

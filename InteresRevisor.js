@@ -2,7 +2,7 @@
 const InteresRevisor = {
   INTERESADO: "Interesado",
   NO_INTERESADO: "No Interesado",
-  QUIZAS: "Quizás",
+  QUIZAS: "Quizas",
 };
 
 module.exports = InteresRevisor;

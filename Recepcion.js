@@ -25,6 +25,15 @@ class Recepcion extends EstadoSesion {
       "No se puede seleccionar artículos en el estado de Recepción"
     );
   }
+
+  asignarRevisores() {
+    throw new Error("No se pueden asignar revisores en el estado de Recepcion");
+  }
+  asignarEvaluacion(revisor, articulo, puntaje, texto) {
+    throw new Error(
+      "No se pueden asignar evaluaciones en el estado de Recepcion"
+    );
+  }
 }
 
 module.exports = Recepcion;
