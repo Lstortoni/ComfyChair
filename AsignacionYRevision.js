@@ -1,5 +1,5 @@
 const EstadoSesion = require("./EstadoSesion");
-const Seleccion = require("./Seleccion");
+const Revision = require("./Revision");
 
 class AsignacionYRevision extends EstadoSesion {
   permiteAgregarArticulo() {
@@ -28,8 +28,8 @@ class AsignacionYRevision extends EstadoSesion {
     );
   }
 
-  asignarEvaluacion(revisor, articulo, puntaje, texto) {
-    let revision = articulo.revisiones.find(
+  asignarEvaluacion(articulo, revisor, puntaje, texto) {
+    let revision = articulo.revisionesArticulo.find(
       (revision) => revision.revisor === revisor
     );
     if (!revision) {
@@ -46,24 +46,12 @@ class AsignacionYRevision extends EstadoSesion {
   ) {
     while (revisoresAsignados.length < 3 && lista.length > 0) {
       let revisor = lista.pop();
-      console.log(
-        "Revisiones asignanadas para el revisor:" + revisor.nombreCompleto
-      );
-      console.log(
-        "Nomero de revisiones para el revisor al inicio" +
-          revisionesAsignadas.get(revisor)
-      );
       if (
         !revisoresAsignados.includes(revisor) &&
         revisionesAsignadas.get(revisor) < limiteDeRevisionesPorRevisor
       ) {
         revisoresAsignados.push(revisor);
         revisionesAsignadas.set(revisor, revisionesAsignadas.get(revisor) + 1);
-
-        console.log(
-          "Nomero de revisiones para el revisor despues de sumar" +
-            revisionesAsignadas.get(revisor)
-        );
       }
     }
   }
@@ -73,6 +61,7 @@ class AsignacionYRevision extends EstadoSesion {
     const interesadosPorArticulo = new Map();
     const quizasPorArticulo = new Map();
     const noInteresadosPorArticulo = new Map();
+    const articulosPorOrdenDeInteresados = articulos;
 
     // /**
     //  *  Calculo el limite de articulos, el de revisores y la cantidad de revisiones por revisor
@@ -92,7 +81,6 @@ class AsignacionYRevision extends EstadoSesion {
 
     // // Inicializar mapas para cada artículo
     articulos.forEach((articulo) => {
-      // console.log("se imprime " + articulo.titulo);
       interesadosPorArticulo.set(articulo, []);
       quizasPorArticulo.set(articulo, []);
       noInteresadosPorArticulo.set(articulo, new Set(revisores));
@@ -102,8 +90,6 @@ class AsignacionYRevision extends EstadoSesion {
     this.sesion.bids.forEach((bid) => {
       const { articulo, revisor, interes } = bid;
 
-      //console.log("El valor del vid es : " + bid.interes);
-      // console.log("El revisor de este vid es " + revisor.nombreCompleto);
       if (interes === "Interesado") {
         interesadosPorArticulo.get(articulo).push(revisor);
       } else if (interes === "Quizas") {
@@ -113,6 +99,24 @@ class AsignacionYRevision extends EstadoSesion {
       noInteresadosPorArticulo.get(articulo).delete(revisor);
     });
 
+    // Ordenar los artículos primero por cantidad de interesados, luego por cantidad de quizas
+
+    // La idea es ordenarlos cosa que vaya analizando y asignando revisores analizando primero
+    // los articulos que tienen mas interesados y más quizas.
+    articulos.sort((a, b) => {
+      const interesadosA = interesadosPorArticulo.get(a).length;
+      const interesadosB = interesadosPorArticulo.get(b).length;
+      const quizasA = quizasPorArticulo.get(a).length;
+      const quizasB = quizasPorArticulo.get(b).length;
+
+      if (interesadosA !== interesadosB) {
+        return interesadosB - interesadosA; // Orden descendente por interesados
+      }
+      return quizasB - quizasA; // Orden descendente por quizas
+    });
+
+    //
+
     articulos.forEach((articulo) => {
       let revisoresAsignados = [];
 
@@ -120,18 +124,12 @@ class AsignacionYRevision extends EstadoSesion {
       const quizas = quizasPorArticulo.get(articulo);
       const noInteresados = Array.from(noInteresadosPorArticulo.get(articulo));
 
-      console.log("El articulo es : " + articulo.titulo);
-      // console.log("los interesados son: " + interesados.length);
-      // console.log("los quizas son: " + quizas.length);
-      //console.log("los no interesados son: " + noInteresados.length);
-      //   // Asignar interesados primero
       this.asignarDeLista(
         interesados,
         revisoresAsignados,
         revisionesAsignadas,
         limiteDeRevisionesPorRevisor
       );
-      // console.log("los revisores asignados son: " + revisoresAsignados.length);
 
       // Asignar quizas
       this.asignarDeLista(
@@ -140,15 +138,15 @@ class AsignacionYRevision extends EstadoSesion {
         revisionesAsignadas,
         limiteDeRevisionesPorRevisor
       );
-      //console.log("los revisores asignados son: " + revisoresAsignados.length);
-      //   // Asignar no interesados
+
+      // Asignar no interesados
       this.asignarDeLista(
         noInteresados,
         revisoresAsignados,
         revisionesAsignadas,
         limiteDeRevisionesPorRevisor
       );
-      // console.log("los revisores asignados son: " + revisoresAsignados.length);
+
       // Asignar random en caso de no completar los 3
 
       let revisoresTotales = revisores;
@@ -167,26 +165,9 @@ class AsignacionYRevision extends EstadoSesion {
           );
         }
       }
-      console.log(
-        "Asigna esta cantidad de revisores" + revisoresAsignados.length
-      );
+
       articulo.revisoresarticulo = revisoresAsignados;
     });
-
-    // // para estar seguro que todos los articulos tienen asignado 3 revisores.
-    // articulos.forEach((articulo) => {
-    //   while (articulo.revisores.length < 3) {
-    //     let revisor = revisores[Math.floor(Math.random() * revisores.length)];
-    //     if (!articulo.revisores.includes(revisor)) {
-    //       articulo.revisores.push(revisor);
-    //       revisionesAsignadas.set(
-    //         revisor,
-    //         revisionesAsignadas.get(revisor) + 1
-    //       );
-    //     }
-    //   }
-    // });
-    this.sesion.cambiarEstado(new Seleccion(this.sesion));
   }
 }
 

@@ -68,8 +68,8 @@ class Sesion {
     this.estado.asignarRevisores();
   }
 
-  asignarEvaluacion(revisor, articulo, puntaje, texto) {
-    this.estado.asignarEvaluacion(revisor, articulo, puntaje, texto);
+  asignarEvaluacion(articulo, revisor, puntaje, texto) {
+    this.estado.asignarEvaluacion(articulo, revisor, puntaje, texto);
   }
 
   /*

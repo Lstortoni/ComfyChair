@@ -336,6 +336,8 @@ describe("Sesion", () => {
    * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
    * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
    * 4 - Verifico que tenga seteada la sesion el estado.
+   * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
+   * 6 - Verifico que ahora el estado de la sesion sea de Seleecion
    */
 
   //
@@ -433,14 +435,99 @@ describe("Sesion", () => {
     //3
     expect(sesionRegular.estado instanceof AsignacionYRevision).toBe(true);
 
-    //4
+    //4 Esto lo consulto porque el estado actual siempre tiene que tener asignada la Sesion actual
     expect(sesionRegular.estado.sesion instanceof Sesion).toBe(true);
 
+    //5
     sesionRegular.asignarRevisores();
-
     // Verificar que cada artículo tenga 3 revisores asignados
     sesionRegular.articulos.forEach((articulo) => {
       expect(articulo.revisoresarticulo).toHaveLength(3);
+    });
+
+    articuloRegular1.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo " +
+          articuloRegular1.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular1,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular2.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular2.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular2,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular3.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular3.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular3,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular4.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular4.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular4,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular5.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular5.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular5,
+        revisor,
+        puntaje,
+        textoRevision
+      );
     });
   });
 

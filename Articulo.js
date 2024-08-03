@@ -25,16 +25,19 @@ class Articulo {
   }
 
   quitarRevision(revision) {
-    this.revisiones = this.revisiones.filter((r) => r !== revision);
+    this.revisionesArticulo = this.revisionesArticulo.filter(
+      (r) => r !== revision
+    );
   }
 
   calificacionPromedio() {
     if (this.revisionesArticulo.length === 0) return 0;
-    const totalPuntaje = this.evisionesArticulo.reduce(
+    const totalPuntaje = this.revisionesArticulo.reduce(
       (sum, rev) => sum + rev.puntaje,
       0
     );
-    return totalPuntaje / this.evisionesArticulo.length;
+    return totalPuntaje / this.revisionesArticulo.length;
   }
 }
+
 module.exports = Articulo;
