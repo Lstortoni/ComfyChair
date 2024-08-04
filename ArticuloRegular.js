@@ -16,8 +16,6 @@ class ArticuloRegular extends Articulo {
   admitirEnSesion(tipoSesion) {
     return tipoSesion.admitirRegular();
   }
-
-  cumpleRequisitos() {}
 }
 
 module.exports = ArticuloRegular;

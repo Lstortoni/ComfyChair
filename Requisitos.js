@@ -13,7 +13,8 @@ class RequisitoRegular extends Requisito {
   }
 
   cumple(articulo) {
-    const abstractWordCount = articulo.abstract.split(" ").length;
+    const abstractWordCount = articulo.resumen.split(" ").length;
+
     return (
       articulo.titulo &&
       articulo.autores.length > 0 &&

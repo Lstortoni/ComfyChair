@@ -17,8 +17,6 @@ class ArticuloPoster extends Articulo {
   admitirEnSesion(tipoSesion) {
     return tipoSesion.admitirPoster();
   }
-
-  cumpleRequisitos() {}
 }
 
 module.exports = ArticuloPoster;
