@@ -1,11 +1,16 @@
 class Articulo {
-  constructor(titulo, urlArchivo, autores, autorEncargado) {
+  constructor(titulo, urlArchivo, autores, autorEncargado, tipoRequisito) {
     this.titulo = titulo;
     this.urlArchivo = urlArchivo;
     this.autores = autores;
     this.autorEncargado = autorEncargado;
     this.revisoresarticulo = [];
     this.revisionesArticulo = [];
+    this.tipoRequisito = tipoRequisito;
+  }
+
+  asignarRequisito(tipoRequisito) {
+    this.tipoRequisito = tipoRequisito;
   }
 
   agregarAutor(autor) {
@@ -37,6 +42,10 @@ class Articulo {
       0
     );
     return totalPuntaje / this.revisionesArticulo.length;
+  }
+
+  cumpleRequisitos() {
+    return this.tipoRequisito.cumple(this);
   }
 }
 

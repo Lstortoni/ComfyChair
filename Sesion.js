@@ -28,6 +28,7 @@ class Sesion {
 
   agregarArticulo(articulo) {
     if (
+      articulo.cumpleRequisitos() &&
       this.estado.permiteAgregarArticulo() &&
       this.articulos.length < this.maxArticulosAceptar &&
       articulo.admitirEnSesion(this.tipoSesion)

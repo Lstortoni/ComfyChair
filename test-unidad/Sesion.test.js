@@ -23,6 +23,8 @@ describe("Sesion", () => {
   let sesionRegular;
   let sesionWorkshop;
   let sesionPoster;
+  let requisitoRegular;
+  let requisitoPoster;
   let articuloRegular1;
   let articuloRegular2;
   let articuloRegular3;
@@ -132,11 +134,15 @@ describe("Sesion", () => {
       new Rol(RolesValidos.AUTHOR),
     ]);
 
+    requisitoRegular = new RequisitoRegular(300);
+    requisitoPoster = new RequisitoPoster();
+
     articuloRegular1 = new ArticuloRegular(
       "Articulo Regular 1",
       "url1",
       [autor1],
       autor1,
+      requisitoRegular,
       "Resumen1"
     );
 
@@ -145,6 +151,7 @@ describe("Sesion", () => {
       "url1",
       [autor2],
       autor2,
+      requisitoRegular,
       "Resumen1"
     );
 
@@ -153,6 +160,7 @@ describe("Sesion", () => {
       "url1",
       [autor3],
       autor3,
+      requisitoRegular,
       "Resumen1"
     );
 
@@ -161,6 +169,7 @@ describe("Sesion", () => {
       "url1",
       [autor4],
       autor4,
+      requisitoRegular,
       "Resumen1"
     );
 
@@ -169,6 +178,7 @@ describe("Sesion", () => {
       "url1",
       [autor5],
       autor5,
+      requisitoRegular,
       "Resumen1"
     );
 
@@ -177,6 +187,7 @@ describe("Sesion", () => {
       "url2",
       [autor2],
       autor2,
+      requisitoPoster,
       "urlFuentes2"
     );
 
