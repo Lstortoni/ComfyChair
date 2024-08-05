@@ -6,10 +6,22 @@ class Mejores extends MetodoSeleccion {
     this.puntajeMinimo = puntajeMinimo;
   }
 
-  seleccionarArticulos(articulos) {
-    return articulos.filter(
-      (articulo) => articulo.puntaje >= this.puntajeMinimo
+  seleccionarArticulos(sesion) {
+    // Filtrar artículos que cumplen con el umbral de puntaje
+    const articulosCumplen = sesion.articulos.filter(
+      (articulo) => articulo.calificacionPromedio() > this.puntajeMinimo
     );
+
+    // Obtener el número máximo de artículos permitidos por la sesión
+    const numMaxAceptados = Math.min(
+      sesion.maxArticulosAceptar,
+      articulosCumplen.length
+    );
+
+    // Seleccionar los mejores artículos hasta el límite permitido
+    const articulosAceptados = articulosCumplen.slice(0, numMaxAceptados);
+
+    return articulosAceptados;
   }
 }
 

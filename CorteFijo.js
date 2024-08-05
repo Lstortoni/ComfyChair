@@ -6,31 +6,25 @@ class CorteFijo extends MetodoSeleccion {
     this.porcentajeAceptacion = porcentajeAceptacion;
   }
 
-  seleccionarArticulos(articulos) {
+  seleccionarArticulos(sesion) {
     // Ordenar artículos por calificación promedio de mayor a menor
-    articulos.sort(
+    const articulosOrdenados = sesion.articulos.sort(
       (a, b) => b.calificacionPromedio() - a.calificacionPromedio()
     );
 
     // Calcular el número de artículos que se pueden aceptar basándose en el porcentaje
-    const numAceptados = Math.ceil(
-      articulos.length * (this.porcentajeAceptacion / 100)
+    const numPorcentajeAceptados = Math.ceil(
+      articulosOrdenados.length * (this.porcentajeAceptacion / 100)
+    );
+
+    // Obtener el número máximo de artículos permitidos por la sesión
+    const numMaxAceptados = Math.min(
+      sesion.maxArticulosAceptar,
+      numPorcentajeAceptados
     );
 
     // Obtener los mejores artículos hasta el límite permitido
-    const articulosAceptados = articulos.slice(0, numAceptados);
-
-    // Asegurar que cada artículo tiene al menos 3 revisores asignados, asignando revisores aleatorios si es necesario
-    const comitePrograma = this.sesion.comitePrograma;
-    articulosAceptados.forEach((articulo) => {
-      while (articulo.revisores.length < 3) {
-        let revisor =
-          comitePrograma[Math.floor(Math.random() * comitePrograma.length)];
-        if (!articulo.revisores.includes(revisor)) {
-          articulo.revisores.push(revisor);
-        }
-      }
-    });
+    const articulosAceptados = articulosOrdenados.slice(0, numMaxAceptados);
 
     return articulosAceptados;
   }

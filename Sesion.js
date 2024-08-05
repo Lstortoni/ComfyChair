@@ -24,6 +24,7 @@ class Sesion {
     this.revisores = revisoresConferencia;
     this.metodoSeleccion = null;
     this.estado = null;
+    this.articulosAceptados = []; // Lista de artículos aceptados
   }
 
   agregarArticulo(articulo) {
@@ -62,7 +63,7 @@ class Sesion {
   }
 
   seleccionarArticulos() {
-    return this.estado.seleccionarArticulos();
+    return this.estado.seleccionarArticulos(this);
   }
 
   asignarRevisores() {
