@@ -25,7 +25,7 @@ class Seleccion extends EstadoSesion {
     }
 
     // Delegamos la selección de artículos al método de selección
-    return this.sesion.metodoSeleccion.seleccionarArticulos(this.sesion);
+    this.sesion.metodoSeleccion.seleccionarArticulos(this.sesion);
   }
 
   asignarRevisores() {

@@ -47,6 +47,18 @@ class Articulo {
   cumpleRequisitos() {
     return this.tipoRequisito.cumple(this);
   }
+
+  obtenerAutores() {
+    return this.autores;
+  }
+
+  obtenerRevisores() {
+    return this.revisoresarticulo;
+  }
+
+  obtenerRevisiones() {
+    return this.revisionesArticulo;
+  }
 }
 
 module.exports = Articulo;

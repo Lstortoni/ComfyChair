@@ -16,6 +16,7 @@ const Mejores = require("../Mejores");
 const CorteFijo = require("../CorteFijo");
 const Bid = require("../Bid");
 const Conferencia = require("../Conferencia");
+const Seleccion = require("../Seleccion");
 const AsignacionYRevision = require("../AsignacionYRevision");
 const { RequisitoRegular, RequisitoPoster } = require("../Requisitos");
 
@@ -199,7 +200,7 @@ describe("Sesion", () => {
     conferencia.agregarAutor(autor5);
 
     metodoSeleccionMejores = new Mejores(80);
-    metodoSeleccionCorteFijo = new CorteFijo();
+    metodoSeleccionCorteFijo = new CorteFijo(25);
   });
   /*********************************************************************************************************************************************************/
 
@@ -342,19 +343,21 @@ describe("Sesion", () => {
     );
   });
 
-  // //*********************************************************************************************************************************************************/
+  //*********************************************************************************************************************************************************/
 
-  /**
-  //  * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
-  //  * cerramos etapa de Bidding y asignamos articulos a revisores.
-  //  * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
-  //  * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
-  //  * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
-  //  * 4 - Verifico que tenga seteada la sesion el estado.
-  //  * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
+  /**  CON METODO DE SELECCION MEJORES
+      * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
+      * cerramos etapa de Bidding y asignamos articulos a revisores, usamos el metodo de selecion Mejores y hacemos probamos seleccionar articulos 
+        una vez que finalizo la etapa de Asignacion y Revision.
+
+      * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
+      * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
+      * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
+      * 4 - Verifico que tenga seteada la sesion el estado.
+      * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
         6 - Asigno validaciones para todos los articulos, es decir por cada articulo recorro sus revisores
             y agrego una revision de cada articulo, no puede haber mas de 3 revisiones por articulo.
-  //  * 7 - Verifico que ahora el estado de la sesion sea de Seleecion
+     
     */
 
   test("Agregar Bids a una sesion", () => {
@@ -465,13 +468,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular1.revisoresarticulo.forEach((revisor, index) => {
-      //  console.log(
-      //       "El revisor para el Ariculo " +
-      //         articuloRegular1.titulo +
-      //         revisor.nombreCompleto
-      //     );
+      // console.log(
+      //   "El revisor para el Ariculo " +
+      //     articuloRegular1.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      //   console.log("El puntaje que va a poner es" + puntaje);
+      //console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular1,
@@ -482,13 +485,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular2.revisoresarticulo.forEach((revisor, index) => {
-      //     console.log(
-      //       "El revisor para el Ariculo" +
-      //         articuloRegular2.titulo +
-      //         revisor.nombreCompleto
-      //     );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular2.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      //     console.log("El puntaje que va a poner es" + puntaje);
+      //  console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular2,
@@ -499,13 +502,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular3.revisoresarticulo.forEach((revisor, index) => {
-      //     console.log(
-      //       "El revisor para el Ariculo" +
-      //         articuloRegular3.titulo +
-      //         revisor.nombreCompleto
-      //     );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular3.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      //     console.log("El puntaje que va a poner es" + puntaje);
+      //    console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular3,
@@ -516,13 +519,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular4.revisoresarticulo.forEach((revisor, index) => {
-      //     console.log(
-      //       "El revisor para el Ariculo" +
-      //         articuloRegular4.titulo +
-      //         revisor.nombreCompleto
-      //     );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular4.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      //     console.log("El puntaje que va a poner es" + puntaje);
+      // console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular4,
@@ -534,12 +537,12 @@ describe("Sesion", () => {
 
     articuloRegular5.revisoresarticulo.forEach((revisor, index) => {
       // console.log(
-      //  "El revisor para el Ariculo" +
-      //   articuloRegular5.titulo +
-      //  revisor.nombreCompleto
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular5.titulo +
+      //     revisor.nombreCompleto
       // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      //console.log("El puntaje que va a poner es" + puntaje);
+      //   console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular5,
@@ -552,6 +555,254 @@ describe("Sesion", () => {
     //6
     sesionRegular.articulos.forEach((articulo) => {
       expect(articulo.revisionesArticulo).toHaveLength(3);
+    });
+
+    sesionRegular.cambiarEstado(new Seleccion(sesionRegular));
+
+    sesionRegular.seleccionarArticulos();
+
+    // console.log(
+    //   "Cantidad de artículos aceptados:",
+    //   sesionRegular.articulosAceptados.length
+    // );
+    // sesionRegular.articulosAceptados.forEach((articulo, index) => {
+    // console.log(
+    //   `Artículo aceptado ${index + 1}: ${
+    //     articulo.titulo
+    //   }, Puntaje Promedio: ${articulo.calificacionPromedio()}`
+    // );
+    // });
+  });
+
+  //*********************************************************************************************************************************************************/
+
+  /** CON MÉTODO DE SELECCIÓN CORTE FIJO ,EN ESTE CASO EL MÁXIMO DE ARTICULOS QUE SE ACEPTA ES 5 CON LO CUAL SI TENGO 4 ARTICULOS
+   *   Y LE DOY AL CORTE FIJO UN PORCENTAJE DE 25 SOLO ME TENDRÍA QUE DEJAR ACEPTAR UN SOLO ARTICULO.
+      * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
+      * cerramos etapa de Bidding y asignamos articulos a revisores, usamos el metodo de selecion Corte Fijo y hacemos probamos seleccionar articulos 
+        una vez que finalizo la etapa de Asignacion y Revision.
+
+      * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
+      * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
+      * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
+      * 4 - Verifico que tenga seteada la sesion el estado.
+      * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
+        6 - Asigno validaciones para todos los articulos, es decir por cada articulo recorro sus revisores
+            y agrego una revision de cada articulo, no puede haber mas de 3 revisiones por articulo.
+     
+    */
+
+  test("Agregar Bids a una sesion", () => {
+    sesionRegular.agregarArticulo(articuloRegular1);
+    sesionRegular.agregarArticulo(articuloRegular2);
+    sesionRegular.agregarArticulo(articuloRegular3);
+    sesionRegular.agregarArticulo(articuloRegular4);
+    sesionRegular.agregarArticulo(articuloRegular5);
+
+    sesionRegular.cambiarEstado(new Bidding(sesionRegular));
+
+    expect(sesionRegular.estado instanceof Bidding).toBe(true);
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular1,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor1,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular1,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor2,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular1,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular2,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular3,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(
+      revisor3,
+      articuloRegular4,
+      InteresRevisor.INTERESADO
+    );
+
+    sesionRegular.recibirBid(revisor4, articuloRegular5, InteresRevisor.QUIZAS);
+
+    expect(sesionRegular.bids).toHaveLength(13);
+
+    sesionRegular.definirMetodoSeleccion(metodoSeleccionCorteFijo);
+    sesionRegular.estado.cerrarBidding();
+
+    //3
+    expect(sesionRegular.estado instanceof AsignacionYRevision).toBe(true);
+
+    //4 Esto lo consulto porque el estado actual siempre tiene que tener asignada la Sesion actual
+    expect(sesionRegular.estado.sesion instanceof Sesion).toBe(true);
+
+    //5
+    sesionRegular.asignarRevisores();
+    // Verificar que cada artículo tenga 3 revisores asignados
+    sesionRegular.articulos.forEach((articulo) => {
+      expect(articulo.revisoresarticulo).toHaveLength(3);
+    });
+
+    sesionRegular.articulos.forEach((articulo) => {
+      expect(articulo.revisionesArticulo).toHaveLength(0);
+    });
+
+    articuloRegular1.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo " +
+          articuloRegular1.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular1,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular2.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular2.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular2,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular3.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular3.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular3,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular4.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular4.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular4,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    articuloRegular5.revisoresarticulo.forEach((revisor, index) => {
+      console.log(
+        "El revisor para el Ariculo" +
+          articuloRegular5.titulo +
+          revisor.nombreCompleto
+      );
+      const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
+      console.log("El puntaje que va a poner es" + puntaje);
+      const textoRevision = "Texto de revision para Articulo 1" + puntaje;
+      sesionRegular.asignarEvaluacion(
+        articuloRegular5,
+        revisor,
+        puntaje,
+        textoRevision
+      );
+    });
+
+    //6
+    sesionRegular.articulos.forEach((articulo) => {
+      expect(articulo.revisionesArticulo).toHaveLength(3);
+    });
+
+    sesionRegular.cambiarEstado(new Seleccion(sesionRegular));
+
+    sesionRegular.seleccionarArticulos();
+
+    console.log(
+      "Cantidad de artículos aceptados:",
+      sesionRegular.articulosAceptados.length
+    );
+    sesionRegular.articulosAceptados.forEach((articulo, index) => {
+      console.log(
+        `Artículo aceptado ${index + 1}: ${
+          articulo.titulo
+        }, Puntaje Promedio: ${articulo.calificacionPromedio()}`
+      );
     });
   });
 

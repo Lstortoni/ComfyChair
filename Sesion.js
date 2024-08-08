@@ -63,7 +63,7 @@ class Sesion {
   }
 
   seleccionarArticulos() {
-    return this.estado.seleccionarArticulos(this);
+    this.estado.seleccionarArticulos(this);
   }
 
   asignarRevisores() {

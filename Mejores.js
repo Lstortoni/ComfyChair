@@ -21,7 +21,7 @@ class Mejores extends MetodoSeleccion {
     // Seleccionar los mejores artículos hasta el límite permitido
     const articulosAceptados = articulosCumplen.slice(0, numMaxAceptados);
 
-    return articulosAceptados;
+    sesion.articulosAceptados = articulosAceptados;
   }
 }
 

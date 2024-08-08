@@ -12,7 +12,7 @@ class CorteFijo extends MetodoSeleccion {
       (a, b) => b.calificacionPromedio() - a.calificacionPromedio()
     );
 
-    // Calcular el número de artículos que se pueden aceptar basándose en el porcentaje
+    // Calcular el número de artículos que se pueden aceptar basándose en el porcentaje y redondeamos hacia arriba
     const numPorcentajeAceptados = Math.ceil(
       articulosOrdenados.length * (this.porcentajeAceptacion / 100)
     );
@@ -26,7 +26,7 @@ class CorteFijo extends MetodoSeleccion {
     // Obtener los mejores artículos hasta el límite permitido
     const articulosAceptados = articulosOrdenados.slice(0, numMaxAceptados);
 
-    return articulosAceptados;
+    sesion.articulosAceptados = articulosAceptados;
   }
 }
 
