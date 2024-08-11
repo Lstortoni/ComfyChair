@@ -700,13 +700,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular1.revisoresarticulo.forEach((revisor, index) => {
-      console.log(
-        "El revisor para el Ariculo " +
-          articuloRegular1.titulo +
-          revisor.nombreCompleto
-      );
+      // console.log(
+      //   "El revisor para el Ariculo " +
+      //     articuloRegular1.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      console.log("El puntaje que va a poner es" + puntaje);
+      //console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular1,
@@ -717,13 +717,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular2.revisoresarticulo.forEach((revisor, index) => {
-      console.log(
-        "El revisor para el Ariculo" +
-          articuloRegular2.titulo +
-          revisor.nombreCompleto
-      );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular2.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      console.log("El puntaje que va a poner es" + puntaje);
+      //  console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular2,
@@ -734,13 +734,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular3.revisoresarticulo.forEach((revisor, index) => {
-      console.log(
-        "El revisor para el Ariculo" +
-          articuloRegular3.titulo +
-          revisor.nombreCompleto
-      );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular3.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      console.log("El puntaje que va a poner es" + puntaje);
+      //   console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular3,
@@ -751,13 +751,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular4.revisoresarticulo.forEach((revisor, index) => {
-      console.log(
-        "El revisor para el Ariculo" +
-          articuloRegular4.titulo +
-          revisor.nombreCompleto
-      );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular4.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      console.log("El puntaje que va a poner es" + puntaje);
+      //  console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular4,
@@ -768,13 +768,13 @@ describe("Sesion", () => {
     });
 
     articuloRegular5.revisoresarticulo.forEach((revisor, index) => {
-      console.log(
-        "El revisor para el Ariculo" +
-          articuloRegular5.titulo +
-          revisor.nombreCompleto
-      );
+      // console.log(
+      //   "El revisor para el Ariculo" +
+      //     articuloRegular5.titulo +
+      //     revisor.nombreCompleto
+      // );
       const puntaje = Math.floor(Math.random() * (120 - 50 + 1)) + 50;
-      console.log("El puntaje que va a poner es" + puntaje);
+      // console.log("El puntaje que va a poner es" + puntaje);
       const textoRevision = "Texto de revision para Articulo 1" + puntaje;
       sesionRegular.asignarEvaluacion(
         articuloRegular5,
@@ -793,10 +793,10 @@ describe("Sesion", () => {
 
     sesionRegular.seleccionarArticulos();
 
-    console.log(
-      "Cantidad de artículos aceptados:",
-      sesionRegular.articulosAceptados.length
-    );
+    // console.log(
+    //   "Cantidad de artículos aceptados:",
+    //   sesionRegular.articulosAceptados.length
+    // );
     sesionRegular.articulosAceptados.forEach((articulo, index) => {
       console.log(
         `Artículo aceptado ${index + 1}: ${
@@ -805,47 +805,4 @@ describe("Sesion", () => {
       );
     });
   });
-
-  /*
-  test("Cambiar estado y recibir bids en sesiones", () => {
-    sesionRegular.cambiarEstado(new Bidding(sesionRegular));
-    expect(sesionRegular.estado instanceof Bidding).toBe(true);
-
-    sesionRegular.recibirBid(
-      revisor1,
-      articuloRegular,
-      InteresRevisor.INTERESADO
-    );
-    expect(sesionRegular.bids).toHaveLength(1);
-    expect(sesionRegular.bids[0]).toEqual(
-      new Bid(revisor1, articuloRegular, InteresRevisor.INTERESADO)
-    );
-  });
-
-  test("Definir método de selección y seleccionar artículos en sesiones", () => {
-    sesionRegular.definirMetodoSeleccion(new Mejores());
-    expect(sesionRegular.metodoSeleccion).toBeInstanceOf(Mejores);
-
-    const seleccionados = sesionRegular.seleccionarArticulos();
-    expect(seleccionados).toEqual([]);
-  });
-
-  test("Asignar y remover evaluaciones en sesiones", () => {
-    sesionRegular.agregarArticulo(articuloRegular);
-    sesionRegular.agregarArticulo(articuloPoster);
-
-    sesionRegular.asignarEvaluacion(
-      revisor1,
-      articuloRegular,
-      5,
-      "Buen trabajo"
-    );
-    expect(articuloRegular.revisionesArticulo).toHaveLength(1);
-    expect(articuloRegular.revisionesArticulo[0]).toEqual(
-      new Revision(revisor1, 5, "Buen trabajo")
-    );
-
-    sesionRegular.removerEvaluacion(revisor1, articuloRegular);
-    expect(articuloRegular.revisionesArticulo).toHaveLength(0);
-  }); */
 });
