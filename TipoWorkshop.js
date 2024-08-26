@@ -8,10 +8,6 @@ class TipoWorkshop extends TipoSesion {
   admitirPoster() {
     return true;
   }
-
-  seleccionarArticulosPorTipo(articulos) {
-    // Lógica específica para seleccionar artículos de tipo Workshop
-  }
 }
 
 module.exports = TipoWorkshop;

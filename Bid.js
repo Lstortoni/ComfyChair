@@ -13,6 +13,18 @@ class Bid {
     this.articulo = articulo;
     this.interes = interes;
   }
+
+  getRevisor() {
+    return this.revisor;
+  }
+
+  getArtigulo() {
+    this.articulo;
+  }
+
+  getInteres() {
+    return this.interes;
+  }
 }
 
 module.exports = Bid;

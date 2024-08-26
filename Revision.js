@@ -13,6 +13,14 @@ class Revision {
   agregarTexto(texto) {
     this.texto = texto;
   }
+
+  getPuntaje() {
+    return this.puntaje;
+  }
+
+  getTexto() {
+    return this.texto;
+  }
 }
 
 module.exports = Revision;

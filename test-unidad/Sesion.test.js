@@ -43,8 +43,10 @@ describe("Sesion", () => {
   let metodoSeleccionCorteFijo;
 
   beforeEach(() => {
+    // Dejo creada una conferencia
     conferencia = new Conferencia("Conferencia de Prueba");
 
+    //*******************************CREO 4 USUARIOS CON UN EL ROL DE REVISOR*************************************************
     revisor1 = new Usuario(
       "Revisor1",
       "UNLP",
@@ -77,10 +79,27 @@ describe("Sesion", () => {
       [new Rol(RolesValidos.REVISOR)]
     );
 
+    //*************************************HASTA ACA LOS REVISORES QUE CREO********************************************************************//
+
+    //************************************AGREGO A LA CONFERENCIA 4 REVISORES LO QUE SERIAN EL COMITE DE PROGRAMA******************************//
+
     conferencia.agregarRevisor(revisor1);
     conferencia.agregarRevisor(revisor2);
     conferencia.agregarRevisor(revisor3);
     conferencia.agregarRevisor(revisor4);
+
+    //****************************************HASTA ACA SE AGREGARON LOS REVISORES, COMITE DE PROGRAMA DE LA CONFERENCIA**********************//
+
+    /**
+     * EN MI CASO HAGO HAGO EL EJECICICIO EXTENDIDO CON LO CUAL MIS SESSIONES PUEDEN SER DE 3 TIPOS
+     *
+     * -> REGULAR
+     * -> POSTER
+     * -> WORKSHOP
+     *
+     */
+    //**************************** LAS CONFERENCIAS TIENEN SESIONES,CRERO 3 SESIONES   ***********************************************************************//
+    //********************************LAS SESIONES QUE CREO YA LAS DEJO EN ESTADO RECEPCION******************************************************************//
 
     sesionRegular = new Sesion(
       "Sesión Regular 1",
@@ -116,6 +135,9 @@ describe("Sesion", () => {
     conferencia.agregarSesion(sesionWorkshop);
     conferencia.agregarSesion(sesionPoster);
 
+    //***************************************************HASTA ACA AGREGUE LAS SESIONES A LA CONFERENCIA***************************************************** */
+
+    //*************************************CREO 5 USUARIOS, LOS CUALES VAN A TENER EL ROL DE AUTOR*************************************************************/
     autor1 = new Usuario("Autor1", "UNLP", "autor1@example.com", "pass123", [
       new Rol(RolesValidos.AUTHOR),
     ]);
@@ -136,9 +158,21 @@ describe("Sesion", () => {
       new Rol(RolesValidos.AUTHOR),
     ]);
 
+    conferencia.agregarAutor(autor1);
+    conferencia.agregarAutor(autor2);
+    conferencia.agregarAutor(autor3);
+    conferencia.agregarAutor(autor4);
+    conferencia.agregarAutor(autor5);
+    //*********************************************************FIN CREACION 5 USUARIOS CON ROL AUTOR*************************************************************/
+
+    //***********************************************CREO DOS REQUISITOS PARA ARTICULO REGULAR Y POSTAR**********************************************************/
+
     requisitoRegular = new RequisitoRegular(300);
     requisitoPoster = new RequisitoPoster();
 
+    //**********************************************************************************************************************************************************/
+
+    //**************************************************CREO 5 ARTICULOS DE TIPO REGULAR Y UNO DE TIPO POSTER***************************************************/
     articuloRegular1 = new ArticuloRegular(
       "Articulo Regular 1",
       "url1",
@@ -193,16 +227,17 @@ describe("Sesion", () => {
       "urlFuentes2"
     );
 
-    conferencia.agregarAutor(autor1);
-    conferencia.agregarAutor(autor2);
-    conferencia.agregarAutor(autor3);
-    conferencia.agregarAutor(autor4);
-    conferencia.agregarAutor(autor5);
-
+    //***************************************************CREO LOS DOS METODOS DE SELECCION*********************************************************************/
     metodoSeleccionMejores = new Mejores(80);
     metodoSeleccionCorteFijo = new CorteFijo(25);
   });
   /*********************************************************************************************************************************************************/
+
+  /**
+   * ANOTO ACA TODOS LOS TESGING QUE SE REALIZAN EN EN EL SESSION.TEST
+   * 1 - Agregar y remover articulos en sesiones
+   *
+   */
 
   /**
    * Controlo agregar y eliminar  articulos en sesiones
@@ -230,7 +265,7 @@ describe("Sesion", () => {
   //  * Controlo en las conferencias agregado y eliminacion de revisores y realizo el contro tambien con las sesiones
   //  *  ya que si elimino un revisor de una conferencia también lo tiene que eliminar de una sesion
   //  * 1 - Elimino revisor de una conferencia
-  //  * 2 - Controlo que los revisores en la sesion sean los mimos que en la conferencia
+  //  * 2 - Controlo que los revisores en la sesion sean los mismos que en la conferencia
   //  * 3 - Elimino un revisor y me fijo en la sesion tambien se elimine
   //  */
 
@@ -373,12 +408,6 @@ describe("Sesion", () => {
 
     sesionRegular.recibirBid(
       revisor1,
-      articuloRegular1,
-      InteresRevisor.INTERESADO
-    );
-
-    sesionRegular.recibirBid(
-      revisor1,
       articuloRegular2,
       InteresRevisor.INTERESADO
     );
@@ -445,7 +474,7 @@ describe("Sesion", () => {
 
     sesionRegular.recibirBid(revisor4, articuloRegular5, InteresRevisor.QUIZAS);
 
-    expect(sesionRegular.bids).toHaveLength(13);
+    expect(sesionRegular.bids).toHaveLength(12);
 
     sesionRegular.definirMetodoSeleccion(metodoSeleccionMejores);
     sesionRegular.estado.cerrarBidding();

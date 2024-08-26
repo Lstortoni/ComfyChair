@@ -269,19 +269,44 @@ describe("Sesion", () => {
     // Asegúrate de que cerrarBidding no lanza errores
     expect(() => estado.cerrarBidding()).not.toThrow();
   });
-  // test("AsignacionyRevision implementa asignarRevisores y asignarEvaluacion", () => {
-  //   const sesionMock = {};
-  //   const estado = new AsignacionyRevision(sesionMock);
 
-  //   expect(() => estado.asignarRevisores()).not.toThrow();
-  //   expect(() => estado.asignarEvaluacion()).not.toThrow();
-  // });
+  test("AsignacionyRevision implementa asignarRevisores y asignarEvaluacion", () => {
+    // Mock de sesión
+    const sesionRegular = {
+      // Configura los atributos necesarios para la sesión
+    };
 
-  // test("Seleccion implementa definirMetodoSeleccion y seleccionarArticulos", () => {
-  //   const sesionMock = {};
-  //   const estado = new Seleccion(sesionMock);
+    // Instancia de AsignacionyRevision
+    const estado = new AsignacionyRevision(sesionRegular);
 
-  //   expect(() => estado.definirMetodoSeleccion()).not.toThrow();
-  //   expect(() => estado.seleccionarArticulos()).not.toThrow();
-  // });
+    // Mock de revisor
+    const revisor1 = new Revisor("Nombre Revisor", "email@algo.com");
+
+    // Mock de artículo
+    const articuloRegular1 = new ArticuloRegular(
+      "Título del Artículo",
+      "urlArchivo",
+      ["Autor1", "Autor2"],
+      "AutorEncargado",
+      "TipoRequisito",
+      "Resumen del Artículo"
+    );
+
+    // Agregar revisor y artículo a la sesión si es necesario
+    // sesionRegular.revisores.push(revisor1);
+    // sesionRegular.articulos.push(articuloRegular1);
+
+    // Asegúrate de que asignarRevisores no lanza errores
+    expect(() => estado.asignarRevisores()).not.toThrow();
+
+    // Asegúrate de que asignarEvaluacion no lanza errores con parámetros válidos
+    expect(() =>
+      estado.asignarEvaluacion(
+        articuloRegular1,
+        revisor1,
+        5,
+        "Texto de Evaluación"
+      )
+    ).not.toThrow();
+  });
 });

@@ -191,6 +191,9 @@ describe("Articulo", () => {
     sesionPoster.cambiarEstado(new Recepcion(sesionPoster));
   });
 
+  /**
+   * COMPRUEBO QUE EN UNA SESION DE TIPO REGULAR SOLO SE ACEPTEN ARTICULOS REGULARES Y SI AGREGO UN ARTICULO QUE NO ES REGULAR ENTONCES DE ERROR
+   */
   test("Debería aceptar solo artículos regulares en una sesión regular", () => {
     sesionRegular.agregarArticulo(articuloRegular1);
     expect(sesionRegular.articulos).toContain(articuloRegular1);
@@ -201,6 +204,10 @@ describe("Articulo", () => {
       "No se puede agregar el artículo. Se ha alcanzado el límite máximo, el tipo de artículo no es admitido, o el estado actual no permite agregar artículos."
     );
   });
+
+  /**
+   * COMPRUEBO QUE EN UNA SESION DE POSTER SOLO ACEPTEN ARTICULOS POSTER Y SI AGREGO UN ARTICULO QUE NO POSTER ENTONCES DA ERROR
+   */
 
   test("Debería aceptar solo pósters en una sesión de pósters", () => {
     sesionPoster.agregarArticulo(articuloPoster);
@@ -213,6 +220,9 @@ describe("Articulo", () => {
     );
   });
 
+  /**
+   * COMPRUEBO QUE SI LA SESION ES WORKSHOP ENTONCES ACEPTE LOS DOS ARTICULOS.
+   */
   test("Debería aceptar ambos tipos de artículos en una sesión de workshop", () => {
     sesionWorkshop.agregarArticulo(articuloRegular1);
     sesionWorkshop.agregarArticulo(articuloPoster);

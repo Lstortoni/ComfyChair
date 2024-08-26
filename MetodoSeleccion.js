@@ -1,5 +1,5 @@
 class MetodoSeleccion {
-  seleccionarArticulos(articulos) {
+  seleccionarArticulos(sesion) {
     throw new Error("Se debe implementar en la subclases");
   }
 }
