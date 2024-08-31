@@ -10,5 +10,25 @@ class Usuario {
   agregarRol(rol) {
     this.roles.push(rol);
   }
+
+  getNombreCompleto() {
+    return this.nombreCompleto;
+  }
+
+  getAfiliacion() {
+    return this.afiliacion;
+  }
+
+  getEmail() {
+    return this.email;
+  }
+
+  getContrasena() {
+    return this.contrasena;
+  }
+
+  getRoles() {
+    return this.roles;
+  }
 }
 module.exports = Usuario;

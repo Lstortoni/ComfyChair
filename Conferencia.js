@@ -19,6 +19,9 @@ class Conferencia {
 
   agregarRevisor(revisor) {
     this.comitePrograma.push(revisor);
+    this.sesiones.forEach((sesion) => {
+      sesion.actualizarRevisores(this.comitePrograma);
+    });
   }
 
   eliminarRevisor(revisor) {

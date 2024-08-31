@@ -56,6 +56,14 @@ describe("Conferencia", () => {
       requisitoPoster,
       "urlFuentes2"
     );
+    articuloPosterSinAutor = new ArticuloPoster(
+      "Articulo Poster",
+      "url2",
+      [],
+      autor2,
+      requisitoPoster,
+      "urlFuentes2"
+    );
   });
 
   test("Requisito debería lanzar un error si se llama al método cumple en la clase base", () => {
@@ -78,13 +86,7 @@ describe("Conferencia", () => {
     expect(requisitoPoster.cumple(articuloPoster)).toBe(true);
   });
 
-  //   test("RequisitoPoster debería retornar false si el póster no cumple con los requisitos", () => {
-  //     const requisitoPoster = new RequisitoPoster();
-  //     const articulo = {
-  //       titulo: "",
-  //       autores: ["Autor1", "Autor2"],
-  //     };
-
-  //     expect(requisitoPoster.cumple(articulo)).toBe(false);
-  //   });
+  test("RequisitoPoster debería retornar false si el póster no cumple con los requisitos", () => {
+    expect(requisitoPoster.cumple(articuloPosterSinAutor)).toBe(false);
+  });
 });

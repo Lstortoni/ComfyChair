@@ -207,7 +207,7 @@ describe("Sesion", () => {
   });
 
   test("Recepcion permite agregar artículos", () => {
-    const sesionMock = {}; // Puedes usar un mock para la sesión
+    const sesionMock = {};
     const estado = new Recepcion(sesionMock);
 
     expect(estado.permiteAgregarArticulo()).toBe(true);

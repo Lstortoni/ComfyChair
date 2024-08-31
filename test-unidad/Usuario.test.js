@@ -10,10 +10,10 @@ test("Crear un usuario con un rol", () => {
     "1234",
     [new Rol(RolesValidos.CHAIR)]
   );
-  expect(usuario.nombreCompleto).toBe("Leonardo Stortoni");
-  expect(usuario.afiliacion).toBe("UNLP");
-  expect(usuario.email).toBe("leodaniel1978@gmail.com");
-  expect(usuario.roles[0].nombre).toBe(RolesValidos.CHAIR);
+  expect(usuario.getNombreCompleto()).toBe("Leonardo Stortoni");
+  expect(usuario.getAfiliacion()).toBe("UNLP");
+  expect(usuario.getEmail()).toBe("leodaniel1978@gmail.com");
+  expect(usuario.getRoles()[0].nombre).toBe(RolesValidos.CHAIR);
 });
 
 test("Crear un usuario con múltiples roles", () => {
@@ -25,7 +25,7 @@ test("Crear un usuario con múltiples roles", () => {
     [new Rol(RolesValidos.AUTHOR), new Rol(RolesValidos.REVISOR)]
   );
 
-  expect(usuario.roles).toHaveLength(2);
-  expect(usuario.roles[0].nombre).toBe(RolesValidos.AUTHOR);
-  expect(usuario.roles[1].nombre).toBe(RolesValidos.REVISOR);
+  expect(usuario.getRoles()).toHaveLength(2);
+  expect(usuario.getRoles()[0].nombre).toBe(RolesValidos.AUTHOR);
+  expect(usuario.getRoles()[1].nombre).toBe(RolesValidos.REVISOR);
 });

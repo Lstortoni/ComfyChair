@@ -237,180 +237,110 @@ Como te decía, esto está relacionado con lo anterior - no es una obviedad. El 
 
 					 
 ********************************************************************************************************************************************************************************************
-POSIBLE SOLUCIÓN CHTGPT - OBVIO MAS QUE OBVIO MIRAR MUY ENTRE COMILLAS PERO PUEDE QUIZAS DARNOS UNA FORMA DE ARRANCAR
+TEST REALIZADOS
 ********************************************************************************************************************************************************************************************
-Para diseñar el sistema "ComfyChair" con objetos, comenzaremos identificando las principales entidades involucradas y sus relaciones. A continuación se presenta un diseño de clases en UML para abordar los requerimientos:
+- CONFERENCIA TEST - >
+   -  Agregar  Chairs a la conferencia
+   -  Eliminar Charis de la conferencia
+   -  Agregar revisores
+   -  Eliminar revisores
+   -  Agregar sesiones
+   -  Eliminar sesiones
+   -  Testeo de agregar varios chairs y revisores y prueba de eliminar
 
-Clases Principales
-Usuario
 
-Atributos:
-nombreCompleto: String
-afiliacion: String
-email: String
-contrasena: String
-roles: Set<Rol>
-Métodos:
-agregarRol(rol: Rol): void
-quitarRol(rol: Rol): void
 
-Rol
+ - ARTICULO TEST -> 
+    
+    - Podes crear un articulo y verificar que este todo bien
+	- Poder agregar un autor a un articulo
+	- Poder agregar una revision a un articulo
+	- Cada articulo puede tener solo 3 revisores asi que si quiero agregar mas lanza error
+	- Poder calcular la calificacion promedio 
+	- Devuelve 0 si no hay revisiones
+	- Si el articulo es regular y fuerzo para que cumple con los requsitos de un articulo regular  deberia decir que cumple
+	- Si el articulo es poster y fuerzo para que cumple con los requsitos de un articulo poster  deberia decir que cumple
+	- Si es regular y fuerzo para que no cunpla me tendria que dar falso ya que no cumple
+	- Si es poster y fuerzo para que no cunpla me tendria que dar falso ya que no cumple
+	
 
-Atributos:
-nombre: String (e.g., "Chair", "Revisor", "Autor")
+ - ESTADO TEST (LOS POSIBLES ESTADO SON : RECEPCION,BIGGIND,ASIGNACIONYREVISION,SELECCION) ->
+   
+   - Verificar que en estado de reccepción me permita agregar articulos
+   - Lanza excepcion si instancio EstadoSession y llamo un metodo ya que los hijos lo implementan
+   - Si el estado es Bidding me permite recibir bids y me permite cerrarBidding
+   - Verifico que en el estado AsignacionYRevision si llamo al metodo AsignarRevisores() y AsignarEvalucion()
+     no tire ninguna Excepcion.
+   -
+ 
+ - METODO SELECCION TEST ->
+ 
+   - Verifico que seleccione bién con método Corte fijo
+   - Verifico que selecione bién con método Mejores
+   
+ - REQUISITOS TEST (EN LOS ARTICULOS UTILICE UN STRATEGY PARA DEFINIR LOS REQUSISITOS QUE TIENE CADA ARTICULOS HAY UNA CLASE REQUISITEO QUE EXTIENDE REQUISITO REGULAR Y REQUISITO POSTER) ->
+    - Si el Requisito es Regular deve devolver true si el articulo cumple
+	- Se no Requisito es regular y no cunple con los requisitos debe retornar false
+	- Si el Requisito es poster retorna true si cumple con los requisitos
+	- Si el Requisito es poster retorna false si no cumple con los requisitos
+ 
+ - USUARIO TEST ->
+   - Verifico creacion de un Usuario con un Rol particular y testeo todos los geters
+   - Verifico que me deje agregar varios Roles 
+   
+ 
+ TIPO DE SESION TEST - > ESTO ES PARA PARTE EXTENDIDA LAS SESIONES PUEDEN SER DE DISTINTOS TIPOS
+                         TIPO REGULAR
+						 TIPO POSTER
+						 TIPO WORKSHOP
+						
+						
+	
+   - Una sesion que se le asigna el TipoRegular solo admite articulos regulares
+   - Una sesion que se le asigna el TipoRegular tira una Excepcion si se le quiere agregar un articulo no regular
+		
+   - Una sesion que se le asigna el TipoPoster solo admite articulos poster
+   - Una sesion que se le asigna el TipoRegular tira una Excepcion si se le quiere agregar un articulo no poster
+	
+   - Una sesion que se le asigna el TipoWorkshop  admite articulos regulares y  poster
+ 
 
-Conferencia
-Atributos:
-nombre: String
-fechaInicio: Date
-fechaFin: Date
-sesiones: List<Sesion>
-chairs: List<Usuario>
-comitePrograma: List<Usuario>
-Métodos:
-agregarSesion(sesion: Sesion): void
-quitarSesion(sesion: Sesion): void
-agregarChair(chair: Usuario): void
-quitarChair(chair: Usuario): void
-agregarRevisor(revisor: Usuario): void
-quitarRevisor(revisor: Usuario): void
-Sesion
+ SESION TEST ->
+ 
+    
+    - Agregar articulos de la sesión
+	- Eliminar articulos de la sesión
+	- 
+    - Agregar revisores a la conferencia y controlar que se agreguen bién.
+	- Eliminar revisores de la conferencia y controlar que se eliminen bién
+	- Controlo en la sesiones que pertenecen a la conferencia si agrego y elimino un revisore que lo agregue o elimine de la sesion también
+	- Agregado de articulos a una sesion y que lance exepcion si se supera el limite 
+	- Que tire una excepcion si la sesion paso a otro estado que no es Recepcion, por ejemplo Biddin y si quiero agregar no debe permitirlo.
+    -  CON METODO DE SELECCION MEJORES
+        * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
+        * cerramos etapa de Bidding y asignamos articulos a revisores, usamos el metodo de selecion Mejores y hacemos probamos seleccionar articulos 
+          una vez que finalizo la etapa de Asignacion y Revision.
 
-Atributos:
-nombre: String
-tipo: TipoSesion (ENUM: Regular, Workshop, Poster)
-fechaInicio: Date
-fechaFin: Date
-articulos: List<Articulo>
-estado: EstadoSesion (ENUM: Recepcion, Bidding, AsignacionYRevision, Seleccion)
-maxArticulosAceptar: int
-Métodos:
-agregarArticulo(articulo: Articulo): void
-quitarArticulo(articulo: Articulo): void
-cambiarEstado(nuevoEstado: EstadoSesion): void
-Articulo
+        * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
+        * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
+        * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
+        * 4 - Verifico que tenga seteada la sesion el estado.
+        * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
+        * 6 - Asigno validaciones para todos los articulos, es decir por cada articulo recorro sus revisores
+            y agrego una revision de cada articulo, no puede haber mas de 3 revisiones por articulo.
+     
+   
+	- CON MÉTODO DE SELECCIÓN CORTE FIJO ,EN ESTE CASO EL MÁXIMO DE ARTICULOS QUE SE ACEPTA ES 5 CON LO CUAL SI TENGO 4 ARTICULOS
+      Y LE DOY AL CORTE FIJO UN PORCENTAJE DE 25 SOLO ME TENDRÍA QUE DEJAR ACEPTAR UN SOLO ARTICULO.
+       * Prueba con 5 Articulos y 4 Revisores probamos agregar aticulos y cambiar de estado de Recepcion a Bidding para agregar bids
+       * cerramos etapa de Bidding y asignamos articulos a revisores, usamos el metodo de selecion Corte Fijo y hacemos probamos seleccionar articulos 
+         una vez que finalizo la etapa de Asignacion y Revision.
 
-Atributos:
-titulo: String
-tipo: TipoArticulo (ENUM: Regular, Poster)
-urlArchivo: String
-abstract: String (Solo para tipo Regular)
-urlFuentes: String (Solo para tipo Poster)
-autores: List<Usuario>
-autorEncargado: Usuario
-revisiones: List<Revision>
-Métodos:
-agregarAutor(autor: Usuario): void
-quitarAutor(autor: Usuario): void
-agregarRevision(revision: Revision): void
-quitarRevision(revision: Revision): void
-esValido(): boolean
-Revision
-
-Atributos:
-revisor: Usuario
-texto: String
-puntaje: int
-Métodos:
-asignarPuntaje(puntaje: int): void
-agregarTexto(texto: String): void
-Bid
-
-Atributos:
-revisor: Usuario
-articulo: Articulo
-interes: InteresRevisor (ENUM: Interesado, NoInteresado, Quizas)
-Métodos:
-cambiarInteres(interes: InteresRevisor): void
-Diagrama de Clases
-plaintext
-Copy code
-Usuario
---------------
-+ nombreCompleto: String
-+ afiliacion: String
-+ email: String
-+ contrasena: String
-+ roles: Set<Rol>
---------------
-+ agregarRol(rol: Rol): void
-+ quitarRol(rol: Rol): void
-
-Rol
---------------
-+ nombre: String
-
-Conferencia
---------------
-+ nombre: String
-+ fechaInicio: Date
-+ fechaFin: Date
-+ sesiones: List<Sesion>
-+ chairs: List<Usuario>
-+ comitePrograma: List<Usuario>
---------------
-+ agregarSesion(sesion: Sesion): void
-+ quitarSesion(sesion: Sesion): void
-+ agregarChair(chair: Usuario): void
-+ quitarChair(chair: Usuario): void
-+ agregarRevisor(revisor: Usuario): void
-+ quitarRevisor(revisor: Usuario): void
-
-Sesion
---------------
-+ nombre: String
-+ tipo: TipoSesion
-+ fechaInicio: Date
-+ fechaFin: Date
-+ articulos: List<Articulo>
-+ estado: EstadoSesion
-+ maxArticulosAceptar: int
---------------
-+ agregarArticulo(articulo: Articulo): void
-+ quitarArticulo(articulo: Articulo): void
-+ cambiarEstado(nuevoEstado: EstadoSesion): void
-
-Articulo
---------------
-+ titulo: String
-+ tipo: TipoArticulo
-+ urlArchivo: String
-+ abstract: String
-+ urlFuentes: String
-+ autores: List<Usuario>
-+ autorEncargado: Usuario
-+ revisiones: List<Revision>
---------------
-+ agregarAutor(autor: Usuario): void
-+ quitarAutor(autor: Usuario): void
-+ agregarRevision(revision: Revision): void
-+ quitarRevision(revision: Revision): void
-+ esValido(): boolean
-
-Revision
---------------
-+ revisor: Usuario
-+ texto: String
-+ puntaje: int
---------------
-+ asignarPuntaje(puntaje: int): void
-+ agregarTexto(texto: String): void
-
-Bid
---------------
-+ revisor: Usuario
-+ articulo: Articulo
-+ interes: InteresRevisor
---------------
-+ cambiarInteres(interes: InteresRevisor): void
-Relaciones
-Un Usuario puede tener múltiples Roles.
-Una Conferencia puede tener múltiples Sesiones.
-Una Conferencia tiene múltiples Chairs y un Comité de Programa (ambos son usuarios).
-Una Sesion puede tener múltiples Artículos.
-Un Artículo puede tener múltiples Autores (usuarios) y múltiples Revisiones.
-Un Bid está asociado a un Revisor (usuario) y un Artículo.
-Un Artículo puede tener múltiples Bids y Revisiones.
-Este modelo cubre la mayoría de los requerimientos y proporciona una base sólida para implementar el sistema "ComfyChair". 
-Puedes ajustar y extender este diseño según las necesidades específicas del proyecto y detalles adicionales que puedan surgir.
-
+        * 1 - Prueba cambiando a estado Bidding y agrego un 13 Bids
+        * 2 - Verifico que la cantidad de bids en la sesion se corresponda con 13
+        * 3 - Cierro la etapa de Bidding y vefifico que el estado ahora sea Asignacion y revicion
+        * 4 - Verifico que tenga seteada la sesion el estado.
+        * 5 - Asigno revisores verifico que cada articulo tenga 3 revisores
+        * 6 - Asigno validaciones para todos los articulos, es decir por cada articulo recorro sus revisores
+            y agrego una revision de cada articulo, no puede haber mas de 3 revisiones por articulo.
+					 

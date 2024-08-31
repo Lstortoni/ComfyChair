@@ -79,6 +79,14 @@ describe("Sesion", () => {
       [new Rol(RolesValidos.REVISOR)]
     );
 
+    revisor5 = new Usuario(
+      "Revisor5",
+      "UNLP",
+      "revisor4@example.com",
+      "pass1017777",
+      [new Rol(RolesValidos.REVISOR)]
+    );
+
     //*************************************HASTA ACA LOS REVISORES QUE CREO********************************************************************//
 
     //************************************AGREGO A LA CONFERENCIA 4 REVISORES LO QUE SERIAN EL COMITE DE PROGRAMA******************************//
@@ -227,7 +235,7 @@ describe("Sesion", () => {
       "urlFuentes2"
     );
 
-    //***************************************************CREO LOS DOS METODOS DE SELECCION*********************************************************************/
+    //***************************************************CREO LOS DOS MÉTODOS DE SELECCION*********************************************************************/
     metodoSeleccionMejores = new Mejores(80);
     metodoSeleccionCorteFijo = new CorteFijo(25);
   });
@@ -262,11 +270,12 @@ describe("Sesion", () => {
   // /*********************************************************************************************************************************************************/
 
   // /**
-  //  * Controlo en las conferencias agregado y eliminacion de revisores y realizo el contro tambien con las sesiones
+  //  * Controlo en las conferencias agregado y eliminacion de revisores y realizo el control tambien con las sesiones
   //  *  ya que si elimino un revisor de una conferencia también lo tiene que eliminar de una sesion
   //  * 1 - Elimino revisor de una conferencia
   //  * 2 - Controlo que los revisores en la sesion sean los mismos que en la conferencia
   //  * 3 - Elimino un revisor y me fijo en la sesion tambien se elimine
+  //  * 4 - Agrego un revisor con lo cual tendria que agregarse tambien al comite de programa de la sesión
   //  */
 
   // //1
@@ -293,6 +302,16 @@ describe("Sesion", () => {
     expect(conferencia.comitePrograma).toHaveLength(3);
     expect(conferencia.comitePrograma).not.toContain(revisor1);
     expect(sesionRegular.revisoresSesion()).toHaveLength(3);
+  });
+
+  // //4
+  test("Agregar un revisor a la conferencia", () => {
+    expect(conferencia.comitePrograma).toHaveLength(4);
+
+    conferencia.agregarRevisor(revisor5);
+    expect(conferencia.comitePrograma).toHaveLength(5);
+    expect(conferencia.comitePrograma).toContain(revisor5);
+    expect(sesionRegular.revisoresSesion()).toHaveLength(5);
   });
 
   // /*********************************************************************************************************************************************************/
@@ -589,18 +608,6 @@ describe("Sesion", () => {
     sesionRegular.cambiarEstado(new Seleccion(sesionRegular));
 
     sesionRegular.seleccionarArticulos();
-
-    // console.log(
-    //   "Cantidad de artículos aceptados:",
-    //   sesionRegular.articulosAceptados.length
-    // );
-    // sesionRegular.articulosAceptados.forEach((articulo, index) => {
-    // console.log(
-    //   `Artículo aceptado ${index + 1}: ${
-    //     articulo.titulo
-    //   }, Puntaje Promedio: ${articulo.calificacionPromedio()}`
-    // );
-    // });
   });
 
   //*********************************************************************************************************************************************************/

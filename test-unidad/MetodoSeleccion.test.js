@@ -278,38 +278,5 @@ describe("Articulo", () => {
     expect(sesionRegular.articulosAceptados).toHaveLength(2);
     expect(sesionRegular.articulosAceptados).toContain(articuloRegular1);
     expect(sesionRegular.articulosAceptados).toContain(articuloRegular4);
-
-    // Asignar revisiones y calificaciones a los artículos
-    //   articulo1.agregarRevision({ puntaje: 8 });
-    //   articulo1.agregarRevision({ puntaje: 7 });
-    //   articulo1.agregarRevision({ puntaje: 9 });
-
-    //   articulo2.agregarRevision({ puntaje: 6 });
-    //   articulo2.agregarRevision({ puntaje: 7 });
-    //   articulo2.agregarRevision({ puntaje: 7 });
-
-    //   articulo3.agregarRevision({ puntaje: 5 });
-    //   articulo3.agregarRevision({ puntaje: 6 });
-    //   articulo3.agregarRevision({ puntaje: 5 });
-
-    //   articulo4.agregarRevision({ puntaje: 9 });
-    //   articulo4.agregarRevision({ puntaje: 9 });
-    //   articulo4.agregarRevision({ puntaje: 10 });
-
-    //   // Agregar artículos a la sesión
-    //   sesion.agregarArticulo(articulo1);
-    //   sesion.agregarArticulo(articulo2);
-    //   sesion.agregarArticulo(articulo3);
-    //   sesion.agregarArticulo(articulo4);
-
-    //   // Aplicar el método Mejores con un puntaje mínimo de 7
-    //   const mejores = new Mejores(7);
-    //   mejores.seleccionarArticulos(sesion);
-
-    //   // Verificar que solo se seleccionaron los artículos que cumplen con el puntaje mínimo
-    //   expect(sesion.articulosAceptados).toHaveLength(3);
-    //   expect(sesion.articulosAceptados).toContain(articulo1);
-    //   expect(sesion.articulosAceptados).toContain(articulo2);
-    //   expect(sesion.articulosAceptados).toContain(articulo4);
   });
 });
